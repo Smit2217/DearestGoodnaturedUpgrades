@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "SkillTrack AI"
+description = "A modern student career-readiness dashboard that helps learners understand their strengths, close skill gaps, follow a roadmap, and celebrate progress."
+version = "1.0.0"
+id = "artifacts/skilltrack-ai"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25770
+
+[services.development]
+run = "pnpm --filter @workspace/skilltrack-ai run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/skilltrack-ai", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/skilltrack-ai/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25770"
+BASE_PATH = "/"
